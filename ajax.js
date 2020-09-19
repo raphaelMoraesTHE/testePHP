@@ -34,7 +34,7 @@
      var result = document.getElementById("Resultado");     
      var xmlreq = CriaRequest();
 
-     // Exibi a imagem de progresso
+     // Exibi a mensagem de progresso
      result.innerHTML = '<h5> <strong>EXECUTANDO PESQUISA </strong> </h5>';
 
      // Iniciar uma requisição
@@ -60,15 +60,17 @@
  function getItens() {
 
      // Declaração de Variáveis
-     var nome   = document.getElementById("txtitens").value;
-     var itens  = document.getElementById("Itens");//itens
-     var xmlreq = CriaRequest();
+     var itens   = document.getElementById("txtitens").value;
+     var result  = document.getElementById("Itens");
+     var xmlreq  = CriaRequest();
+
+     //document.write(itens);//debug
 
      // Exibi a imagem de progresso
-     itens.innerHTML = '<h5> <strong>EXECUTANDO PESQUISA </strong> </h5>';//itens
+     result.innerHTML = '<h5> <strong>EXECUTANDO PESQUISA </strong> </h5>';//itens
 
      // Iniciar uma requisição
-     xmlreq.open("GET", "itens.php?txtitens=" + nome, true);
+     xmlreq.open("GET", "itens.php?txtitens=" + itens, true);
 
      // Atribui uma função para ser executada sempre que houver uma mudança de ado
      xmlreq.onreadystatechange = function(){
@@ -78,9 +80,9 @@
 
              // Verifica se o arquivo foi encontrado com sucesso
              if (xmlreq.status == 200) {
-                 itens.innerHTML = xmlreq.responseText;
+                 result.innerHTML = xmlreq.responseText;
              }else{
-                 itens.innerHTML = "Erro: " + xmlreq.statusText;
+                 result.innerHTML = "Erro: " + xmlreq.statusText;
              }
          }
      };

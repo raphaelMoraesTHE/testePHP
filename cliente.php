@@ -2,21 +2,20 @@
 // Verifica se existe a variável txtnome
 if (isset($_GET["txtnome"])) {
     $nome = $_GET["txtnome"];
+    
     // Conexao com o banco de dados
     $server = "localhost";
     $user = "root";
     $senha = "";
     $base = "dbvenda";
     $conexao = new mysqli($server, $user, $senha, $base) or die("Erro na conexão!");
-    //mysql_select_db($base);
-
+    
     // Verifica se a variável está vazia
     if (empty($nome)) {
-        $sql = "SELECT clientes.idcliente, clientes.nomecli, clientes.fonecli, clientes.emailcli, vendas.valortotal FROM clientes, vendas WHERE clientes.idcliente = vendas.idcliente GROUP BY vendas.idvenda ORDER BY clientes.idcliente";
-        //c.idclient, c.nomecli, c.fonecli, c.emailcli, v.valortotal
+        $sql = "SELECT clientes.idcliente, clientes.nomecli, clientes.fonecli, clientes.emailcli, vendas.valortotal, vendas.idvenda FROM clientes, vendas WHERE clientes.idcliente = vendas.idcliente GROUP BY vendas.idvenda ORDER BY clientes.idcliente";        
     } else {
         $nome .= "%";
-        $sql = "SELECT clientes.idcliente, clientes.nomecli, clientes.fonecli, clientes.emailcli, vendas.valortotal FROM clientes, vendas WHERE clientes.idcliente = vendas.idcliente and clientes.nomecli like '$nome' GROUP BY vendas.idvenda ORDER BY clientes.idcliente";
+        $sql = "SELECT clientes.idcliente, clientes.nomecli, clientes.fonecli, clientes.emailcli, vendas.valortotal, vendas.idvenda FROM clientes, vendas WHERE clientes.idcliente = vendas.idcliente and clientes.nomecli like '$nome' GROUP BY vendas.idvenda ORDER BY clientes.idcliente";
     }
 
     sleep(1);
@@ -34,12 +33,15 @@ if (isset($_GET["txtnome"])) {
                             <th>NOME</th>
                             <th>TELEFONE</th>                            
                             <th>EMAIL</th>
-                            <th>VALOR ULT. COMPRA</th>
+                            <th>VALOR COMPRA</th>
+                            <th>COMPRA</th>
                         </tr>
                     </thead>
                     <tbody>
                     <tr>";
         $return = "$tabela";
+        $botao = "<input type='button' name='btnItens' value='Itens' onclick='getItens();'/>";
+
         // Captura os dados da consulta e inseri na tabela HTML
         while ($linha = $result->fetch_array(MYSQLI_ASSOC)) {
             $return.= "<td>" . utf8_encode($linha["idcliente"]) . "</td>";
@@ -47,7 +49,8 @@ if (isset($_GET["txtnome"])) {
             $return.= "<td>" . utf8_encode($linha["fonecli"]) . "</td>";
             $return.= "<td>" . utf8_encode($linha["emailcli"]) . "</td>";
             $return.= "<td>" . utf8_encode($linha["valortotal"]) . "</td>";
-            $return.= "<td><input type='button' name='btnItens' value='Ver Itens' onclick='getItens();'/></td>";
+            $return.= "<td id='txtitens'>" . utf8_encode($linha["idvenda"]) . "</td>";
+            $return.= "<td>" . $botao . "</td>";
             $return.= "</tr>";
         }
         echo $return.="</tbody></table>";
