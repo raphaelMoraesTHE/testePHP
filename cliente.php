@@ -2,7 +2,7 @@
 // Verifica se existe a variável txtnome
 if (isset($_GET["txtnome"])) {
     $nome = $_GET["txtnome"];
-    
+
     // Conexao com o banco de dados
     $server = "localhost";
     $user = "root";
@@ -34,14 +34,13 @@ if (isset($_GET["txtnome"])) {
                             <th>TELEFONE</th>                            
                             <th>EMAIL</th>
                             <th>VALOR COMPRA</th>
-                            <th>COMPRA</th>
+                            <!--<th>COMPRA</th>-->
                         </tr>
                     </thead>
                     <tbody>
                     <tr>";
         $return = "$tabela";
-        $botao = "<input type='button' name='btnItens' value='Itens' onclick='getItens();'/>";
-
+        
         // Captura os dados da consulta e inseri na tabela HTML
         while ($linha = $result->fetch_array(MYSQLI_ASSOC)) {
             $return.= "<td>" . utf8_encode($linha["idcliente"]) . "</td>";
@@ -49,8 +48,7 @@ if (isset($_GET["txtnome"])) {
             $return.= "<td>" . utf8_encode($linha["fonecli"]) . "</td>";
             $return.= "<td>" . utf8_encode($linha["emailcli"]) . "</td>";
             $return.= "<td>" . utf8_encode($linha["valortotal"]) . "</td>";
-            $return.= "<td id='txtitens'>" . utf8_encode($linha["idvenda"]) . "</td>";
-            $return.= "<td>" . $botao . "</td>";
+            $return.= "<td>" . "<input type='button' name='btnItens' value='Itens' onclick='getItens(".$linha["idvenda"].");'/>" . "</td>";
             $return.= "</tr>";
         }
         echo $return.="</tbody></table>";

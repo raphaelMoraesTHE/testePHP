@@ -46,7 +46,7 @@
          // Verifica se foi concluído com sucesso e a conexão fechada (readyState=4)
          if (xmlreq.readyState == 4) {
 
-             // Verifica se o arquivo foi encontrado com sucesso
+             // Verifica se foi encontrado com sucesso
              if (xmlreq.status == 200) {
                  result.innerHTML = xmlreq.responseText;
              }else{
@@ -57,17 +57,15 @@
      xmlreq.send(null);
  }
 
- function getItens() {
+ function getItens(valor) {
 
      // Declaração de Variáveis
-     var itens   = document.getElementById("txtitens").value;
+     var itens   = valor;
      var result  = document.getElementById("Itens");
      var xmlreq  = CriaRequest();
-
-     //document.write(itens);//debug
-
-     // Exibi a imagem de progresso
-     result.innerHTML = '<h5> <strong>EXECUTANDO PESQUISA </strong> </h5>';//itens
+     
+     // Exibi a menssagem de progresso
+     result.innerHTML = '<h5> <strong>EXECUTANDO PESQUISA </strong> </h5>';
 
      // Iniciar uma requisição
      xmlreq.open("GET", "itens.php?txtitens=" + itens, true);
@@ -78,7 +76,7 @@
          // Verifica se foi concluído com sucesso e a conexão fechada (readyState=4)
          if (xmlreq.readyState == 4) {
 
-             // Verifica se o arquivo foi encontrado com sucesso
+             // Verifica se foi encontrado com sucesso
              if (xmlreq.status == 200) {
                  result.innerHTML = xmlreq.responseText;
              }else{

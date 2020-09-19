@@ -1,7 +1,7 @@
 <?php
-// Verifica se existe a variável txtnome
-if (isset($_GET["txtitens"])) {
-    $itens = 2;//$_GET["txtitens"];
+// Verifica se existe a variável txtitens
+if (isset($_GET["txtitens"]) && !empty($_GET["txtitens"])) {
+    $itens = $_GET["txtitens"];
 
     // Conexao com o banco de dados
     $server = "localhost";
@@ -46,8 +46,7 @@ if (isset($_GET["txtitens"])) {
 
     } else {
         // Se a consulta não retornar nenhum valor, exibi mensagem para o usuário
-        echo "Não foram encontrados registros!";
-        echo $itens;
+        echo "Não foram encontrados registros!";        
     }
 }
 ?>
